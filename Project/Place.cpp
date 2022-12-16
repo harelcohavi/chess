@@ -38,7 +38,7 @@ Place::~Place()
 	Output: x
 */
 
-int Place::getX()
+int Place::getX() const
 {
 	return this->_x;
 }
@@ -48,7 +48,7 @@ int Place::getX()
 	Output: y
 */
 
-int Place::getY()
+int Place::getY() const
 {
 	return this->_y;
 }
@@ -63,4 +63,19 @@ void Place::operator=(const Place other)
 {
 	this->_x = other._x;
 	this->_y = other._y;
+}
+
+Place Place::operator+(int num) const
+{
+	return Place(this->getX(), this->getY() + num);
+}
+
+Place Place::operator-(int num) const
+{
+	return Place(this->getX(), this->getY() - num);
+}
+
+bool Place::operator==(const Place other) const
+{
+	return this->_x == other._x && this->_y == other._y;
 }

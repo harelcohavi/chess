@@ -6,9 +6,6 @@ public:
 	None(Place location);
 	~None();
 
-	bool canMove(Place dst) override;
-	void move(Place dst) override;
-
-private:
-
+	bool canMove(Place dst) const override;
+	bool move(Place dst) override;
 };

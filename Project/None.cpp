@@ -9,11 +9,11 @@ None::~None()
 {
 }
 
-bool None::canMove(Place dst)
+bool None::canMove(Place dst) const
 {
 	return false;
 }
 
-void None::move(Place dst)
+bool None::move(Place dst)
 {
 }
