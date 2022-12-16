@@ -3,7 +3,7 @@
 class None : public Chart
 {
 public:
-	None();
+	None(Place location);
 	~None();
 
 	bool canMove(Place dst) override;

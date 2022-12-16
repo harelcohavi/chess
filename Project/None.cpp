@@ -1,6 +1,7 @@
 #include "None.h"
 
-None::None()
+None::None(Place location)
+	: Chart(NN, location)
 {
 }
 
@@ -8,11 +9,11 @@ None::~None()
 {
 }
 
-bool canMove(Place dst)
+bool None::canMove(Place dst)
 {
 	return false;
 }
 
-void move(Place dst)
+void None::move(Place dst)
 {
 }
