@@ -45,19 +45,3 @@ bool Pipe::canMove(Place dst) const
 	return false;
 }
 
-/*
-	move the chart
-	Input: dst
-	Output: true for moved
-*/
-
-bool Pipe::move(Place dst)
-{
-	if (this->canMove(dst))//just a double check, but this function shold not call if it cant move
-	{
-		this->_location = dst;
-		return true;
-	}
-
-	return false;
-}

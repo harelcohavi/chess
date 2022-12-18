@@ -13,7 +13,3 @@ bool None::canMove(Place dst) const
 {
 	return false;
 }
-
-bool None::move(Place dst)
-{
-}

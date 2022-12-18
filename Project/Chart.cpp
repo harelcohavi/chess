@@ -23,3 +23,19 @@ enum ChartType Chart::getType() const
 {
 	return this->_type;
 }
+
+bool Chart::move(Place dst)
+{
+	if (this->canMove(dst))
+	{
+		this->_location = dst;
+		return true;
+	}
+
+	return false;
+}
+
+Place Chart::getLocation() const
+{
+	return this->_location;
+}

@@ -1,4 +1,5 @@
-
+#ifndef PLACE_H
+#define PLACE_H
 
 class Place
 {
@@ -18,3 +19,5 @@ private:
 	int _x;
 	int _y;
 };
+
+#endif

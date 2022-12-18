@@ -1,3 +1,6 @@
+#ifndef NONE_H
+#define NONE_H
+
 #include "Chart.h"
 
 class None : public Chart
@@ -7,5 +10,6 @@ public:
 	~None();
 
 	bool canMove(Place dst) const override;
-	bool move(Place dst) override;
 };
+
+#endif

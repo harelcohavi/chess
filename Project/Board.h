@@ -1,4 +1,10 @@
+#ifndef BOARD_H
+#define BOARD_H
+
+#include <iostream>
 #include "Chart.h"
+
+using namespace std;
 
 enum codes
 {
@@ -18,12 +24,17 @@ public:
 	Board();
 	~Board();
 	enum codes move(Place src, Place dst, bool playerColor); //true for white
-	bool whiteCheck();
-	bool blackCheck();
+	
+	static bool checkMate();
+
 	static Chart** getBoard();
+	static string boardToStr();
 
 private:
 	static Chart** _board;
+	bool whiteCheck();
+	bool blackCheck();
 
 };
 
+#endif // !BOARD_H

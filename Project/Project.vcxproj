@@ -132,6 +132,7 @@
     <ClCompile Include="Chart.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="None.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Place.cpp" />

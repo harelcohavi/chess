@@ -1,8 +1,11 @@
+#ifndef CHART_H
+#define CHART_H
+
 #include "Place.h"
 
 enum ChartType
 {
-	BP,	//black pipe
+	BP = 0,	//black pipe
 	BB, //black bishop
 	BN,
 	BR,
@@ -25,8 +28,10 @@ public:
 	~Chart();
 
 	virtual bool canMove(Place dst) const = 0;
-	virtual bool move(Place dst) = 0;
+	bool move(Place dst);
+
 	enum ChartType getType() const;
+	Place getLocation() const;
 
 protected:
 	void changeType(enum ChartType chartType);
@@ -34,3 +39,5 @@ protected:
 	enum ChartType _type;
 	Place _location;
 };
+
+#endif // !CHART_H
