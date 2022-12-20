@@ -23,6 +23,7 @@ bool Rook::canMove(Place dst) const
 	int i = 0;
 	Chart** board = Board::getBoard();
 
+
 	if (srcX == dstX)
 	{
 

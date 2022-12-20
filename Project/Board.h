@@ -23,7 +23,7 @@ class Board
 public:
 	Board();
 	~Board();
-	enum codes move(Place src, Place dst, bool playerColor); //true for white
+	static enum codes move(Place src, Place dst, bool playerColor); //true for white
 	
 	static bool checkMate();
 
@@ -31,9 +31,9 @@ public:
 	static string boardToStr();
 
 private:
-	static Chart** _board;
-	bool whiteCheck();
-	bool blackCheck();
+	static Chart* _board[8];
+	static bool whiteCheck();
+	static bool blackCheck();
 
 };
 

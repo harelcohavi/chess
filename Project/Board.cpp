@@ -7,16 +7,20 @@
 #include "Queen.h"
 #include "Rook.h"
 
+#define COL 8	
+
 Board::Board()
 {
 	int i = 0;
 	int j = 0;
+	None temp(Place(0, 0));
 
 	for (i = 2; i < 6; i++)
 	{
 		for (j = 0; j < 8; j++)
 		{
-			this->_board[i][j] = None(Place(i,j));
+			temp = (None(Place(i, j)));
+			this->_board[i * COL + j] = NULL;
 		}
 	}
 }
@@ -40,7 +44,7 @@ string Board::boardToStr()
 {
 	string str = "";
 	int i = 0;
-	
+
 	for (i = 0; i < 64; i++)
 	{
 		switch (_board[i]->getType())
@@ -82,6 +86,7 @@ string Board::boardToStr()
 			str += "K";
 			break;
 		default:
+			str += "#";
 			break;
 		}
 	}
@@ -183,7 +188,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 {
 	enum ChartType srcType = NN;
 	enum ChartType dstType = NN;
-	Chart** board = _board;
+	Chart* killedChart = NULL;
 
 	/**illegal index: the src or dst place is out of the board**/
 	if (src.getX() > 7 || src.getY() > 7 || dst.getX() > 7 || dst.getY() > 7)
@@ -237,13 +242,15 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	}
 
 	//self check:
+	killedChart = &_board[dst.getY()][dst.getX()];
 	_board[dst.getY()][dst.getX()] = _board[src.getY()][src.getX()];
 	
 	if (playerColor)
 	{
 		if (whiteCheck())
 		{
-			_board = board;
+			_board[src.getY()][src.getX()] = _board[dst.getY()][dst.getX()];
+			_board[dst.getY()][dst.getX()] = *killedChart;
 			return SELF_CHECK;
 		}
 	}
@@ -251,7 +258,8 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	{
 		if (blackCheck())
 		{
-			_board = board;
+			_board[src.getY()][src.getX()] = _board[dst.getY()][dst.getX()];
+			_board[dst.getY()][dst.getX()] = *killedChart;
 			return SELF_CHECK;
 		}
 	}

@@ -1,0 +1,5 @@
+﻿  Board.cpp
+C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\Board.cpp(104,20): warning C4305: 'argument': truncation from 'ChartType' to 'bool'
+C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\Board.cpp(146,20): warning C4305: 'argument': truncation from 'ChartType' to 'bool'
+Board.obj : error LNK2001: unresolved external symbol "private: static class Chart * * Board::_board" (?_board@Board@@0PAPEAVChart@@A)
+C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\x64\Debug\Project.exe : fatal error LNK1120: 1 unresolved externals
