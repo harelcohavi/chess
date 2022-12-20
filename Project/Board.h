@@ -31,7 +31,7 @@ public:
 	static string boardToStr();
 
 private:
-	static Chart* _board[8];
+	static Chart* _board[64];
 	static bool whiteCheck();
 	static bool blackCheck();
 

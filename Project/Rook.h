@@ -11,6 +11,7 @@ public:
 
 	bool canMove(Place dst) const override;
 
+	static Rook& getRook(int y, int x, bool color);
 private:
 
 };

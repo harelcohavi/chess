@@ -2,11 +2,11 @@
 #include "Board.h"
 
 Rook::Rook(Place location, bool color)
-	: Chart(WP, location)
+	: Chart(WR, location)
 {
 	if (!color)
 	{
-		this->changeType(BP);
+		this->changeType(BR);
 	}
 }
 
@@ -69,4 +69,11 @@ bool Rook::canMove(Place dst) const
 	}
 
 	return false;
+}
+
+Rook& Rook::getRook(int y, int x, bool color)
+{
+	Rook temp(Place(y, x), color);
+
+	return temp;
 }

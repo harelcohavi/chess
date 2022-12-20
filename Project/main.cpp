@@ -16,8 +16,11 @@ int main()
 	bool turn = true; //true for white turn, false for black turn
 	string toDo = "";
 
+	Board::Board();
+
 	while (!Board::checkMate())
 	{
+		cout << Board::boardToStr();
 		do
 		{
 			cin >> toDo;

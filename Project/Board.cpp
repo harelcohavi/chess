@@ -8,6 +8,10 @@
 #include "Rook.h"
 
 #define COL 8	
+#define WHITE true
+#define BLACK false
+
+Chart* Board::_board[64];
 
 Board::Board()
 {
@@ -15,14 +19,18 @@ Board::Board()
 	int j = 0;
 	None temp(Place(0, 0));
 
-	for (i = 2; i < 6; i++)
+	for (i = 0; i < 8; i++)//set board to none
 	{
 		for (j = 0; j < 8; j++)
 		{
-			temp = (None(Place(i, j)));
-			this->_board[i * COL + j] = NULL;
+			this->_board[(i * COL) + j] = &None::getNone(i, j);
 		}
 	}
+
+	this->_board[0][0] = Rook::getRook(0, 0, BLACK);
+	this->_board[0][7] = Rook::getRook(0, 7, BLACK);
+	this->_board[7][0] = Rook::getRook(7, 0, WHITE);
+	this->_board[7][7] = Rook::getRook(7, 7, WHITE);
 }
 
 Board::~Board()
@@ -47,47 +55,59 @@ string Board::boardToStr()
 
 	for (i = 0; i < 64; i++)
 	{
-		switch (_board[i]->getType())
+		if (_board[i])
 		{
-		case BP:
-			str += "p";
-			break;
-		case BB:
-			str += "b";
-			break;
-		case BN:
-			str += "n";
-			break;
-		case BR:
-			str += "r";
-			break;
-		case BQ:
-			str += "q";
-			break;
-		case BK:
-			str += "k";
-			break;
-		case WP:
-			str += "P";
-			break;
-		case WB:
-			str += "B";
-			break;
-		case WN:
-			str += "N";
-			break;
-		case WR:
-			str += "R";
-			break;
-		case WQ:
-			str += "Q";
-			break;
-		case WK:
-			str += "K";
-			break;
-		default:
+			switch (_board[i]->getType())
+			{
+			case BP:
+				str += "p";
+				break;
+			case BB:
+				str += "b";
+				break;
+			case BN:
+				str += "n";
+				break;
+			case BR:
+				str += "r";
+				break;
+			case BQ:
+				str += "q";
+				break;
+			case BK:
+				str += "k";
+				break;
+			case WP:
+				str += "P";
+				break;
+			case WB:
+				str += "B";
+				break;
+			case WN:
+				str += "N";
+				break;
+			case WR:
+				str += "R";
+				break;
+			case WQ:
+				str += "Q";
+				break;
+			case WK:
+				str += "K";
+				break;
+			default:
+				str += "#";
+				break;
+			}
+		}
+		else
+		{
 			str += "#";
-			break;
+		}
+
+		if (!((i + 1) % 8))
+		{
+			str += "\n";
 		}
 	}
 	
@@ -101,7 +121,7 @@ bool Board::checkMate()
 
 bool Board::whiteCheck()
 {
-	King theKing(Place(0,0), WK);
+	King theKing(Place(0,0), WHITE);
 	bool findKing = false;
 
 	int i = 0;
@@ -143,7 +163,7 @@ bool Board::whiteCheck()
 
 bool Board::blackCheck()
 {
-	King theKing(Place(0, 0), BK);
+	King theKing(Place(0, 0), BLACK);
 	bool findKing = false;
 
 	int i = 0;
