@@ -1,6 +1,12 @@
 #include "Rook.h"
 #include "Board.h"
 
+/*
+	Ctor:
+	Input: location and color
+	Output: NONE
+*/
+
 Rook::Rook(Place location, bool color)
 	: Chart(WR, location)
 {
@@ -10,9 +16,21 @@ Rook::Rook(Place location, bool color)
 	}
 }
 
+/*
+	Dtor:
+	Dont really needed
+*/
+
 Rook::~Rook()
 {
 }
+
+/*
+	Check if he can move to the dst
+	Input: the dst
+	Output: true for can move false if cant move
+*/
+
 
 bool Rook::canMove(Place dst) const
 {
@@ -71,9 +89,14 @@ bool Rook::canMove(Place dst) const
 	return false;
 }
 
-Rook& Rook::getRook(int y, int x, bool color)
+/*
+	Input: x,y and color
+	Output: pointer to a rook
+*/
+
+Rook* Rook::getRook(int y, int x, bool color)
 {
 	Rook temp(Place(y, x), color);
 
-	return temp;
+	return &temp;
 }

@@ -65,15 +65,29 @@ void Place::operator=(const Place other)
 	this->_y = other._y;
 }
 
+/*
+	add the 2 places y
+	Input: 2 places
+	Output: the Place with the new y
+*/
+
 Place Place::operator+(int num) const
 {
 	return Place(this->getX(), this->getY() + num);
 }
 
+/*
+	sub the firts place y from the second place 
+*/
+
 Place Place::operator-(int num) const
 {
 	return Place(this->getX(), this->getY() - num);
 }
+
+/*
+	Check if 2 places are the same
+*/
 
 bool Place::operator==(const Place other) const
 {

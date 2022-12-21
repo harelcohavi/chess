@@ -1,6 +1,12 @@
 #include "King.h"
 #include "Board.h"
 
+/*
+	Ctor:
+	Input: location and color
+	Output: NONE
+*/
+
 King::King(Place location, bool color)
 	: Chart(WK, location)
 {
@@ -9,9 +15,21 @@ King::King(Place location, bool color)
 		changeType(BK);
 	}
 }
+
+/*
+	Dtor:
+	Dont really needed
+*/
+
 King::~King()
 {
 }
+
+/*
+	Check if he can move to the dst
+	Input: the dst
+	Output: true for can move false if cant move
+*/
 
 bool King::canMove(Place dst) const
 {

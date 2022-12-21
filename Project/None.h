@@ -11,7 +11,7 @@ public:
 
 	bool canMove(Place dst) const override;
 
-	static None& getNone(int y, int x);
+	static None* getNone(int y, int x);
 };
 
 #endif

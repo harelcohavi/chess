@@ -13,6 +13,13 @@
 
 Chart* Board::_board[64];
 
+/*
+	Ctor: 
+	build the board
+	Input: NONE
+	Output: NONE
+*/
+
 Board::Board()
 {
 	int i = 0;
@@ -23,19 +30,30 @@ Board::Board()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			this->_board[(i * COL) + j] = &None::getNone(i, j);
+			this->_board[(i * COL) + j] = None::getNone(i, j);
 		}
 	}
 
-	this->_board[0][0] = Rook::getRook(0, 0, BLACK);
-	this->_board[0][7] = Rook::getRook(0, 7, BLACK);
-	this->_board[7][0] = Rook::getRook(7, 0, WHITE);
-	this->_board[7][7] = Rook::getRook(7, 7, WHITE);
+	this->_board[0 * COL + 0] = Rook::getRook(0, 0, BLACK);
+	this->_board[0 * COL + 7] = Rook::getRook(0, 7, BLACK);
+	this->_board[7 * COL + 0] = Rook::getRook(7, 0, WHITE);
+	this->_board[7 * COL + 7] = Rook::getRook(7, 7, WHITE);
 }
+
+/*
+	Dtor
+	For now dont really needed, maybe will needed later
+*/
 
 Board::~Board()
 {
 }
+
+/*
+	return the board
+	Input: NONE (there is only one board)
+	Output: the board
+*/
 
 Chart** Board::getBoard()
 {
@@ -44,7 +62,7 @@ Chart** Board::getBoard()
 
 /*
 	This function turn the board into str
-	Input: NONE (the board by class)
+	Input: NONE 
 	Output: string
 */
 
@@ -114,10 +132,22 @@ string Board::boardToStr()
 	return str;
 }
 
+/*
+	check if there is check mate
+	Input: NONE
+	Output: true for check mate
+*/
+
 bool Board::checkMate()
 {
 	return false; //we maybe do it
 }
+
+/*
+	check if there is check on the white king
+	Input: NONE
+	Output: true for check
+*/
 
 bool Board::whiteCheck()
 {
@@ -161,6 +191,12 @@ bool Board::whiteCheck()
 	return false;
 }
 
+/*
+	check if there is check on the black king
+	Input: NONE
+	Output: true for check
+*/
+
 bool Board::blackCheck()
 {
 	King theKing(Place(0, 0), BLACK);
@@ -203,6 +239,12 @@ bool Board::blackCheck()
 
 	return false;
 }
+
+/*
+	try to move chart
+	Input: NONE
+	Output: the movement code
+*/
 
 enum codes Board::move(Place src, Place dst, bool playerColor)
 {

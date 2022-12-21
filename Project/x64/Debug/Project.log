@@ -1,3 +1,11 @@
-﻿  None.cpp
-C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\None.cpp(21): warning C4172: returning address of local variable or temporary: temp
+﻿  Board.cpp
+  None.cpp
+  Pipe.cpp
+  Place.cpp
+  Rook.cpp
+  main.cpp
+C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\main.cpp(12,8): warning C4930: 'Board theBoard(void)': prototyped function not called (was a variable definition intended?)
+  Generating Code...
+C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\Rook.cpp(78): warning C4172: returning address of local variable or temporary: temp
+C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\None.cpp(40): warning C4172: returning address of local variable or temporary: temp
   Project.vcxproj -> C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\x64\Debug\Project.exe

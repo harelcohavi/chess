@@ -1,6 +1,12 @@
 #include "Pipe.h"
 #include "Board.h"
 
+/*
+	Ctor:
+	Input: location and color
+	Output: NONE
+*/
+
 Pipe::Pipe(Place location, bool color)
 	: Chart(WP, location)
 {
@@ -10,9 +16,20 @@ Pipe::Pipe(Place location, bool color)
 	}
 }
 
+/*
+	Dtor:
+	Dont really needed
+*/
+
 Pipe::~Pipe()
 {
 }
+
+/*
+	Check if he can move to the dst
+	Input: the dst
+	Output: true for can move false if cant move
+*/
 
 bool Pipe::canMove(Place dst) const 
 {
