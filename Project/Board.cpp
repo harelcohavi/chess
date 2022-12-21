@@ -7,6 +7,8 @@
 #include "Queen.h"
 #include "Rook.h"
 
+#include <string>
+
 #define COL 8	
 #define WHITE true
 #define BLACK false
@@ -35,8 +37,8 @@ Board::Board()
 	}
 
 	this->_board[0 * COL + 0] = Rook::getRook(0, 0, BLACK);
-	this->_board[0 * COL + 7] = Rook::getRook(0, 7, BLACK);
-	this->_board[7 * COL + 0] = Rook::getRook(7, 0, WHITE);
+	this->_board[7 * COL + 0] = Rook::getRook(7, 0, BLACK);
+	this->_board[0 * COL + 7] = Rook::getRook(0, 7, WHITE);
 	this->_board[7 * COL + 7] = Rook::getRook(7, 7, WHITE);
 }
 
@@ -66,13 +68,31 @@ Chart** Board::getBoard()
 	Output: string
 */
 
+/*
+- a b c d e f g h -
+8 r # # # # # # r 8
+7 # # # # # # # # 7
+6 # # # # # # # # 6
+5 # # # # # # # # 5
+4 # # # # # # # # 4
+3 # # # # # # # # 3
+2 # # # # # # # # 2
+1 R # # # # # # R 1
+- a b c d e f g h -
+*/
 string Board::boardToStr()
 {
-	string str = "";
+	string str = "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
 	int i = 0;
-
+	
 	for (i = 0; i < 64; i++)
 	{
+		if (!((i) % 8))
+		{
+			int temp = 1+((i) / 8);
+			str += to_string(temp) + "\t";
+		}
+
 		if (_board[i])
 		{
 			switch (_board[i]->getType())
@@ -114,9 +134,10 @@ string Board::boardToStr()
 				str += "K";
 				break;
 			default:
-				str += "#";
+				str += "#"; 
 				break;
 			}
+			str += "\t";
 		}
 		else
 		{
@@ -125,10 +146,12 @@ string Board::boardToStr()
 
 		if (!((i + 1) % 8))
 		{
-			str += "\n";
+			int temp = ((i + 1) / 8);
+			str += to_string(temp) + "\n";
 		}
 	}
 	
+	str += "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
 	return str;
 }
 
@@ -261,9 +284,9 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	{
 		return ILLEGAL_INDEX;//too low
 	}
-
-	srcType = Board::_board[src.getY()][src.getX()].getType();
-	dstType = Board::_board[dst.getY()][dst.getX()].getType();
+	// a1a2 -> a,a=X / 1,2=Y
+	srcType = Board::_board[src.getX()][src.getY()].getType();
+	dstType = Board::_board[dst.getX()][dst.getY()].getType();
 	
 	//has no move: src and dst are the same
 	if (src == dst)
@@ -274,7 +297,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	//no chart: the src chart isnt the player chart
 	//dst chart: the dst is the player chart
 
-	if (playerColor)
+	if (playerColor) // white
 	{
 		if (!(srcType >= 6 && srcType <= 11))
 		{
@@ -285,7 +308,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 			return DST_CHART; //the dst is white
 		}
 	}
-	else
+	else // black
 	{
 		if (!(srcType >= 0 && srcType <= 5))
 		{

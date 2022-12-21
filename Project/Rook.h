@@ -11,7 +11,7 @@ public:
 
 	bool canMove(Place dst) const override;
 
-	static Rook* getRook(int y, int x, bool color);
+	static Rook* getRook(int x, int y, bool color);
 private:
 
 };

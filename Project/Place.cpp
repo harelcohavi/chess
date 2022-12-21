@@ -7,8 +7,7 @@
 	Output: NONE
 */
 
-Place::Place()
-	:_x(0), _y(0)
+Place::Place() :_x(0), _y(0)
 {
 }
 
@@ -19,9 +18,9 @@ Place::Place()
 	Output: NONE
 */
 
-Place::Place(int x, int y)
-	: _x(x), _y(y)
+Place::Place(int x, int y) : _x(x), _y(y)
 {
+
 }
 
 /*

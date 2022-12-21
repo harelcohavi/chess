@@ -35,9 +35,9 @@ bool None::canMove(Place dst) const
 	Output: pointer to a None chart
 */
 
-None* None::getNone(int y, int x)
+None* None::getNone(int x, int y)
 {
-	None temp = None(Place(y, x));
+	None* temp = new None(Place(x, y));
 
-	return &temp;
+	return temp;
 }

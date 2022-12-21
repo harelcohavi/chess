@@ -94,9 +94,7 @@ bool Rook::canMove(Place dst) const
 	Output: pointer to a rook
 */
 
-Rook* Rook::getRook(int y, int x, bool color)
+Rook* Rook::getRook(int x, int y, bool color)
 {
-	Rook temp(Place(y, x), color);
-
-	return &temp;
+	return new Rook(Place(x, y), color);
 }
