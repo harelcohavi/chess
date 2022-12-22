@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 ﻿  main.cpp
 C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\main.cpp(12,8): warning C4930: 'Board theBoard(void)': prototyped function not called (was a variable definition intended?)
   Pipe.cpp
   Place.cpp
   Generating Code...
   Project.vcxproj -> C:\Users\magshimim\Desktop\magshimim\secondYear\first semester\Advanced Programming\w7\chess\Project\x64\Debug\Project.exe
+=======
+﻿  Board.cpp
+  Project.vcxproj -> C:\Users\idobe\Documents\Magshimim\עקרונות מתקדמים\chess\Project\x64\Debug\Project.exe
+>>>>>>> 2ce2d83370895f6b9ec1a2ecdedd29de00377dab

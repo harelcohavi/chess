@@ -15,7 +15,7 @@ int main()
 	enum codes result = DST_CHART;
 	bool turn = true; //true for white turn, false for black turn
 	string toDo = "";
-
+	string player = turn ? "White" : "Black";
 	Board::Board();
 
 	while (!Board::checkMate())
@@ -32,7 +32,8 @@ int main()
 
 				result = Board::move(src, dst, turn);
 
-				cout << result;
+				player = turn ? "White " : "Black ";
+				cout << player << result << endl;
 
 			}
 
