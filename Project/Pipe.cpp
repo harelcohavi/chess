@@ -37,13 +37,13 @@ bool Pipe::canMove(Place dst) const
 
 	if (dstType == NN)
 	{
-		if ((this->_location + 1 == dst && this->_type == WP) || (this->_location - 1 == dst && this->_type == BP))
+		if ((this->_location + Place(0,1) == dst && this->_type == WP) || (this->_location - Place(0,1) == dst && this->_type == BP))
 		{
 			return true; //normal move
 		}
 		else if(this->_location.getY() == 1 || this->_location.getY() == 6) //may in the start position
 		{
-			if ((this->_location + 2 == dst && this->_type == WP) || (this->_location - 2 == dst && this->_type == BP))
+			if ((this->_location + Place(0,2) == dst && this->_type == WP) || (this->_location - Place(0,2) == dst && this->_type == BP))
 			{
 				return true;
 			}
