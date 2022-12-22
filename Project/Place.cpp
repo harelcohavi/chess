@@ -71,18 +71,18 @@ void Place::operator=(const Place other)
 	Output: the Place with the new y
 */
 
-Place Place::operator+(int num) const
+Place Place::operator+(Place other) const
 {
-	return Place(this->getX(), this->getY() + num);
+	return Place(this->getX() + other.getX(), this->getY() + other.getY());
 }
 
 /*
 	sub the firts place y from the second place 
 */
 
-Place Place::operator-(int num) const
+Place Place::operator-(Place other) const
 {
-	return Place(this->getX(), this->getY() - num);
+	return Place(this->getX() - other.getX(), this->getY() - other.getY());
 }
 
 /*

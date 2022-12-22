@@ -11,8 +11,8 @@ public:
 	int getX() const;
 	int getY() const;
 	void operator=(const Place other);
-	Place operator+(int num) const;
-	Place operator-(int num) const;
+	Place operator+(Place other) const;
+	Place operator-(Place other) const;
 	bool operator==(const Place other) const;
 
 private:
