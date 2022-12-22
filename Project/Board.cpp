@@ -1,5 +1,5 @@
 #include "Board.h"
-#include "Pipe.h"
+#include "PipeChart.h"
 #include "None.h"
 #include "Bishop.h"
 #include "King.h"
@@ -39,13 +39,40 @@ Board::Board()
 		}
 	}
 
+	//pipes
+	for (i = 0; i < 8; i++)
+	{
+		this->_board[1 * COL + i] = PipeChart::getPipe(i, 1, BLACK);
+		this->_board[6 * COL + i] = PipeChart::getPipe(i, 6, WHITE);
+	}
+
+	//rooks
 	this->_board[0 * COL + 0] = Rook::getRook(0, 0, BLACK);
 	this->_board[0 * COL + 7] = Rook::getRook(7, 0, BLACK);
 	this->_board[7 * COL + 0] = Rook::getRook(0, 7, WHITE);
 	this->_board[7 * COL + 7] = Rook::getRook(7, 7, WHITE);
 
+	//kings
 	this->_board[7 * COL + 4] = King::getKing(4, 7, WHITE);
 	this->_board[0 * COL + 4] = King::getKing(4, 0, BLACK);
+
+	//queen:
+	this->_board[0 * COL + 3] = Queen::getQueen(3, 0, BLACK);
+	this->_board[7 * COL + 3] = Queen::getQueen(3, 7, WHITE);
+
+	//knights:
+	this->_board[0 * COL + 1] = Knight::getKnight(1, 0, BLACK);
+	this->_board[0 * COL + 6] = Knight::getKnight(6, 0, BLACK);
+	this->_board[7 * COL + 1] = Knight::getKnight(1, 7, WHITE);
+	this->_board[7 * COL + 6] = Knight::getKnight(6, 7, WHITE);
+
+	//bishops:
+	this->_board[0 * COL + 2] = Bishop::getBishop(2, 0, BLACK);
+	this->_board[0 * COL + 5] = Bishop::getBishop(5, 0, BLACK);
+	this->_board[7 * COL + 2] = Bishop::getBishop(2, 7, WHITE);
+	this->_board[7 * COL + 5] = Bishop::getBishop(5, 7, WHITE);
+
+	
 }
 
 /*
@@ -207,16 +234,9 @@ bool Board::whiteCheck()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			if (Board::_board[i * COL + j]->getType() >= 1 && Board::_board[i * COL + j]->getType() <= 5) //everyone but the pipe
+			if (Board::_board[i * COL + j]->getType() >= 0 && Board::_board[i * COL + j]->getType() <= 5)
 			{
 				if (Board::_board[i * COL + j]->canMove(theKing.getLocation()))
-				{
-					return true;
-				}
-			}
-			if (Board::_board[i * COL + j]->getType() == BP)//the black pipe
-			{
-				if (i + 1 == theKing.getLocation().getY() && (j + 1 == theKing.getLocation().getX() || j - 1 == theKing.getLocation().getX()))
 				{
 					return true;
 				}
@@ -257,16 +277,9 @@ bool Board::blackCheck()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			if (Board::_board[i * COL + j]->getType() >= 7 && Board::_board[i * COL + j]->getType() <= 11) //everyone but the pipe
+			if (Board::_board[i * COL + j]->getType() >= 6 && Board::_board[i * COL + j]->getType() <= 11)
 			{
 				if (Board::_board[i * COL + j]->canMove(theKing.getLocation()))
-				{
-					return true;
-				}
-			}
-			if (Board::_board[i * COL + j]->getType() == WP)//the white pipe
-			{
-				if (i - 1 == theKing.getLocation().getY() && (j + 1 == theKing.getLocation().getX() || j - 1 == theKing.getLocation().getX()))
 				{
 					return true;
 				}
