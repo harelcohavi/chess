@@ -20,7 +20,7 @@ int main()
 
 	while (!Board::checkMate())
 	{
-		cout << Board::boardToStr();
+		Board::boardToStr();
 		do
 		{
 			cin >> toDo;

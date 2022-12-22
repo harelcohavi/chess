@@ -44,14 +44,10 @@ bool Rook::canMove(Place dst) const
 
 	if (srcX == dstX)
 	{
+		srcY > dstY ? dstY++ : dstY--;
 
 		for (i = srcY; i < dstY; i)
 		{
-			if (board[i * COL + srcX]->getType() != NN)
-			{
-				return false; //have chart 
-			}
-
 			if (srcY > dstY)
 			{
 				i--;
@@ -59,6 +55,11 @@ bool Rook::canMove(Place dst) const
 			else
 			{
 				i++;
+			}
+
+			if (board[i * COL + srcX]->getType() != NN)
+			{
+				return false; //have chart 
 			}
 		}
 

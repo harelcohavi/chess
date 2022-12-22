@@ -69,7 +69,7 @@ Chart** Board::getBoard()
 }
 
 /*
-	This function turn the board into str
+	This function turn the board into str and print the board
 	Input: NONE 
 	Output: string
 */
@@ -88,7 +88,8 @@ Chart** Board::getBoard()
 */
 string Board::boardToStr()
 {
-	string str = "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
+	string str = "";
+	std::cout << "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
 	int i = 0;
 	
 	for (i = 0; i < 64; i++)
@@ -96,68 +97,73 @@ string Board::boardToStr()
 		if (!((i) % 8))
 		{
 			int temp = 1+((i) / 8);
-			str += to_string(temp) + "\t";
+			std::cout << to_string(temp) + "\t";
 		}
-
-		if (_board[i])
+		switch (_board[i]->getType())
 		{
-			switch (_board[i]->getType())
-			{
-			case BP:
-				str += "p";
-				break;
-			case BB:
-				str += "b";
-				break;
-			case BN:
-				str += "n";
-				break;
-			case BR:
-				str += "r";
-				break;
-			case BQ:
-				str += "q";
-				break;
-			case BK:
-				str += "k";
-				break;
-			case WP:
-				str += "P";
-				break;
-			case WB:
-				str += "B";
-				break;
-			case WN:
-				str += "N";
-				break;
-			case WR:
-				str += "R";
-				break;
-			case WQ:
-				str += "Q";
-				break;
-			case WK:
-				str += "K";
-				break;
-			default:
-				str += "#"; 
-				break;
-			}
-			str += "\t";
+		case BP:
+			str += "p";
+			std::cout << "p";
+			break;
+		case BB:
+			str += "b";
+			std::cout << "b";
+			break;
+		case BN:
+			str += "n";
+			std::cout << "n";
+			break;
+		case BR:
+			str += "r";
+			std::cout << "r";
+			break;
+		case BQ:
+			str += "q";
+			std::cout << "q";
+			break;
+		case BK:
+			str += "k";
+			std::cout << "k";
+			break;
+		case WP:
+			str += "P";
+			std::cout << "P";
+			break;
+		case WB:
+			str += "B";
+			std::cout << "B";
+			break;
+		case WN:
+			str += "N";
+			std::cout << "N";
+			break;
+		case WR:
+			str += "R";
+			std::cout << "R";
+			break;
+		case WQ:
+			str += "Q";
+			std::cout << "Q";
+			break;
+		case WK:
+			str += "K";
+			std::cout << "K";
+			break;
+		default:
+			str += "#"; 
+			std::cout << "#";
+			break;
 		}
-		else
-		{
-			str += "#";
-		}
+		std::cout << "\t";
 
 		if (!((i + 1) % 8))
 		{
 			int temp = ((i + 1) / 8);
-			str += to_string(temp) + "\n";
+			std::cout << to_string(temp) + "\n";
 		}
 	}
 	
-	str += "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
+	std::cout << "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
 	return str;
 }
 
@@ -192,7 +198,7 @@ bool Board::whiteCheck()
 		{
 			if (Board::_board[i * COL + j]->getType() == WK)
 			{
-				theKing.move(Place(i, j));
+				theKing.move(Place(j, i));
 				findKing = true;
 			}
 		}
@@ -241,7 +247,8 @@ bool Board::blackCheck()
 		{
 			if (Board::_board[i * COL + j]->getType() == BK)
 			{
-				theKing.move(Place(i, j));
+				theKing.move(Place(j, i));
+				findKing = true;
 			}
 		}
 	}
@@ -328,7 +335,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	}
 
 	//illegal move: dont need to explain
-	if (!(Board::_board[src.getY() * COL + dst.getX()]->canMove(dst)))
+	if (!(Board::_board[src.getY() * COL + src.getX()]->canMove(dst)))
 	{
 		return ILLEGAL_MOVE;
 	}
@@ -336,12 +343,15 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	//self check:
 	killedChart = _board[dst.getY() * COL + dst.getX()];
 	_board[dst.getY() * COL + dst.getX()] = _board[src.getY() * COL + src.getX()];
+	_board[src.getY() * COL + src.getX()] = None::getNone(src.getX(), src.getY());
+	_board[dst.getY() * COL + dst.getX()]->move(Place(dst.getX(), dst.getY()));
 	
 	if (playerColor)
 	{
 		if (whiteCheck())
 		{
-			_board[src.getY() * COL + src.getX()] = _board[dst.getY() * COL + dst.getX()];
+			delete _board[src.getY() * COL + src.getX()];
+			_board[dst.getY() * COL + dst.getX()]->move(src);
 			_board[dst.getY() * COL + dst.getX()] = killedChart;
 			return SELF_CHECK;
 		}
@@ -350,7 +360,8 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	{
 		if (blackCheck())
 		{
-			_board[src.getY() * COL + src.getX()] = _board[dst.getY() * COL + dst.getX()];
+			delete _board[src.getY() * COL + src.getX()];
+			_board[dst.getY() * COL + dst.getX()]->move(src);
 			_board[dst.getY() * COL + dst.getX()] = killedChart;
 			return SELF_CHECK;
 		}
@@ -359,7 +370,6 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	//now not need to return it back becouse its 100% legal move 
 
 	delete killedChart;
-	_board[src.getY() * COL + src.getX()] = None::getNone(src.getX(), src.getY());
 
 	//check: its legal move and its make check
 	if (playerColor)
