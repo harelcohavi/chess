@@ -9,7 +9,9 @@ public:
 	King(Place location, bool color);
 	~King();
 
-	bool canMove(Place dst) const;
+	bool canMove(Place dst) const override;
+
+	static King* getKing(int x, int y, bool color);
 };
 
 #endif // !KING_H

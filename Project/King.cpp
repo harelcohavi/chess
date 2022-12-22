@@ -40,14 +40,14 @@ bool King::canMove(Place dst) const
 	{
 		if (kingColor)
 		{
-			if (!(Board::getBoard()[dst.getY()][dst.getX()].getType() >= 6 && Board::getBoard()[dst.getY()][dst.getX()].getType() <= 11))
+			if (!(Board::getBoard()[dst.getY() * COL + dst.getX()]->getType() >= 6 && Board::getBoard()[dst.getY() * COL + dst.getX()]->getType() <= 11))
 			{
 				return true;
 			}
 		}
 		else
 		{
-			if (!(Board::getBoard()[dst.getY()][dst.getX()].getType() >= 0 && Board::getBoard()[dst.getY()][dst.getX()].getType() <= 5))
+			if (!(Board::getBoard()[dst.getY() * COL + dst.getX()]->getType() >= 0 && Board::getBoard()[dst.getY() * COL + dst.getX()]->getType() <= 5))
 			{
 				return true;
 			}
@@ -55,4 +55,15 @@ bool King::canMove(Place dst) const
 	}
 
 	return false;
+}
+
+/*
+	return king by x,y and color
+	Input: x,y and color
+	Output: pointer to a king
+*/
+
+King* King::getKing(int x, int y, bool color)
+{
+	return new King(Place(x, y), color);
 }

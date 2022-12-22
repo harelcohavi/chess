@@ -7,12 +7,12 @@
 #include "Queen.h"
 #include "Rook.h"
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 #include <string>
 
 #define COL 8	
-=======
->>>>>>> 1bdbba3878f37f3d1fd421f612bbb9e5fc2597a1
+//=======
+//>>>>>>> 1bdbba3878f37f3d1fd421f612bbb9e5fc2597a1
 #define WHITE true
 #define BLACK false
 
@@ -40,9 +40,12 @@ Board::Board()
 	}
 
 	this->_board[0 * COL + 0] = Rook::getRook(0, 0, BLACK);
-	this->_board[7 * COL + 0] = Rook::getRook(7, 0, BLACK);
-	this->_board[0 * COL + 7] = Rook::getRook(0, 7, WHITE);
+	this->_board[0 * COL + 7] = Rook::getRook(7, 0, BLACK);
+	this->_board[7 * COL + 0] = Rook::getRook(0, 7, WHITE);
 	this->_board[7 * COL + 7] = Rook::getRook(7, 7, WHITE);
+
+	this->_board[7 * COL + 4] = King::getKing(4, 7, WHITE);
+	this->_board[0 * COL + 4] = King::getKing(4, 0, BLACK);
 }
 
 /*
@@ -187,9 +190,10 @@ bool Board::whiteCheck()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			if (Board::_board[i][j].getType() == WK)
+			if (Board::_board[i * COL + j]->getType() == WK)
 			{
 				theKing.move(Place(i, j));
+				findKing = true;
 			}
 		}
 	}
@@ -197,14 +201,14 @@ bool Board::whiteCheck()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			if (Board::_board[i][j].getType() >= 1 && Board::_board[i][j].getType() <= 5) //everyone but the pipe
+			if (Board::_board[i * COL + j]->getType() >= 1 && Board::_board[i * COL + j]->getType() <= 5) //everyone but the pipe
 			{
-				if (Board::_board[i][j].canMove(theKing.getLocation()))
+				if (Board::_board[i * COL + j]->canMove(theKing.getLocation()))
 				{
 					return true;
 				}
 			}
-			if (Board::_board[i][j].getType() == BP)//the black pipe
+			if (Board::_board[i * COL + j]->getType() == BP)//the black pipe
 			{
 				if (i + 1 == theKing.getLocation().getY() && (j + 1 == theKing.getLocation().getX() || j - 1 == theKing.getLocation().getX()))
 				{
@@ -235,7 +239,7 @@ bool Board::blackCheck()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			if (Board::_board[i][j].getType() == BK)
+			if (Board::_board[i * COL + j]->getType() == BK)
 			{
 				theKing.move(Place(i, j));
 			}
@@ -246,14 +250,14 @@ bool Board::blackCheck()
 	{
 		for (j = 0; j < 8; j++)
 		{
-			if (Board::_board[i][j].getType() >= 7 && Board::_board[i][j].getType() <= 11) //everyone but the pipe
+			if (Board::_board[i * COL + j]->getType() >= 7 && Board::_board[i * COL + j]->getType() <= 11) //everyone but the pipe
 			{
-				if (Board::_board[i][j].canMove(theKing.getLocation()))
+				if (Board::_board[i * COL + j]->canMove(theKing.getLocation()))
 				{
 					return true;
 				}
 			}
-			if (Board::_board[i][j].getType() == WP)//the white pipe
+			if (Board::_board[i * COL + j]->getType() == WP)//the white pipe
 			{
 				if (i - 1 == theKing.getLocation().getY() && (j + 1 == theKing.getLocation().getX() || j - 1 == theKing.getLocation().getX()))
 				{
@@ -288,8 +292,8 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 		return ILLEGAL_INDEX;//too low
 	}
 	// a1a2 -> a,a=X / 1,2=Y
-	srcType = Board::_board[src.getX()][src.getY()].getType();
-	dstType = Board::_board[dst.getX()][dst.getY()].getType();
+	srcType = Board::_board[src.getY() * COL + src.getX()]->getType();
+	dstType = Board::_board[dst.getY() * COL + dst.getX()]->getType();
 	
 	//has no move: src and dst are the same
 	if (src == dst)
@@ -324,21 +328,21 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	}
 
 	//illegal move: dont need to explain
-	if (!(Board::_board[src.getY()][dst.getX()].canMove(dst)))
+	if (!(Board::_board[src.getY() * COL + dst.getX()]->canMove(dst)))
 	{
 		return ILLEGAL_MOVE;
 	}
 
 	//self check:
-	killedChart = &_board[dst.getY()][dst.getX()];
-	_board[dst.getY()][dst.getX()] = _board[src.getY()][src.getX()];
+	killedChart = _board[dst.getY() * COL + dst.getX()];
+	_board[dst.getY() * COL + dst.getX()] = _board[src.getY() * COL + src.getX()];
 	
 	if (playerColor)
 	{
 		if (whiteCheck())
 		{
-			_board[src.getY()][src.getX()] = _board[dst.getY()][dst.getX()];
-			_board[dst.getY()][dst.getX()] = *killedChart;
+			_board[src.getY() * COL + src.getX()] = _board[dst.getY() * COL + dst.getX()];
+			_board[dst.getY() * COL + dst.getX()] = killedChart;
 			return SELF_CHECK;
 		}
 	}
@@ -346,13 +350,16 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	{
 		if (blackCheck())
 		{
-			_board[src.getY()][src.getX()] = _board[dst.getY()][dst.getX()];
-			_board[dst.getY()][dst.getX()] = *killedChart;
+			_board[src.getY() * COL + src.getX()] = _board[dst.getY() * COL + dst.getX()];
+			_board[dst.getY() * COL + dst.getX()] = killedChart;
 			return SELF_CHECK;
 		}
 	}
 
 	//now not need to return it back becouse its 100% legal move 
+
+	delete killedChart;
+	_board[src.getY() * COL + src.getX()] = None::getNone(src.getX(), src.getY());
 
 	//check: its legal move and its make check
 	if (playerColor)

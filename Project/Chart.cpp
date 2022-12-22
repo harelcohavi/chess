@@ -48,15 +48,9 @@ void Chart::changeType(enum ChartType chartType)
 	Output: noved or not
 */
 
-bool Chart::move(Place dst)
+void Chart::move(Place dst)
 {
-	if (this->canMove(dst))
-	{
-		this->_location = dst;
-		return true;
-	}
-
-	return false;
+	this->_location = dst;
 }
 
 //Getters

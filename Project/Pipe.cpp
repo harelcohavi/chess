@@ -33,7 +33,7 @@ Pipe::~Pipe()
 
 bool Pipe::canMove(Place dst) const 
 {
-	enum ChartType dstType = Board::getBoard()[dst.getX()][dst.getY()].getType();
+	enum ChartType dstType = Board::getBoard()[dst.getY() * COL + dst.getX()]->getType();
 
 	if (dstType == NN)
 	{

@@ -28,7 +28,7 @@ public:
 	~Chart();
 
 	virtual bool canMove(Place dst) const = 0;
-	bool move(Place dst);
+	void move(Place dst);
 
 	enum ChartType getType() const;
 	Place getLocation() const;
