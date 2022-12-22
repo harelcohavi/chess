@@ -7,9 +7,12 @@
 #include "Queen.h"
 #include "Rook.h"
 
+<<<<<<< HEAD
 #include <string>
 
 #define COL 8	
+=======
+>>>>>>> 1bdbba3878f37f3d1fd421f612bbb9e5fc2597a1
 #define WHITE true
 #define BLACK false
 

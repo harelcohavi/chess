@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Chart.h"
 
+#define COL 8
+
 using namespace std;
 
 enum codes
