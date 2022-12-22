@@ -7,7 +7,6 @@
 #include "Queen.h"
 #include "Rook.h"
 
-#define COL 8	
 #define WHITE true
 #define BLACK false
 
