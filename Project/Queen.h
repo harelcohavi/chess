@@ -1,7 +1,8 @@
 #ifndef QUEEN_H
 #define QUEEN_H
 
-#include "Chart.h"
+#include "Bishop.h"
+#include "Rook.h"
 
 class Queen : public Chart
 {

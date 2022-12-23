@@ -53,8 +53,8 @@ Board::Board()
 	this->_board[7 * COL + 7] = Rook::getRook(7, 7, WHITE);
 
 	//kings
-	this->_board[7 * COL + 4] = King::getKing(4, 7, WHITE);
 	this->_board[0 * COL + 4] = King::getKing(4, 0, BLACK);
+	this->_board[7 * COL + 4] = King::getKing(4, 7, WHITE);
 
 	//queen:
 	this->_board[0 * COL + 3] = Queen::getQueen(3, 0, BLACK);
@@ -191,6 +191,7 @@ string Board::boardToStr()
 	}
 	
 	std::cout << "-\ta\tb\tc\td\te\tf\tg\th\t-\n";
+	str += "0";
 	return str;
 }
 
@@ -312,6 +313,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 		return ILLEGAL_INDEX;//too low
 	}
 	// a1a2 -> a,a=X / 1,2=Y
+
 	srcType = Board::_board[src.getY() * COL + src.getX()]->getType();
 	dstType = Board::_board[dst.getY() * COL + dst.getX()]->getType();
 	
@@ -357,7 +359,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	killedChart = _board[dst.getY() * COL + dst.getX()];
 	_board[dst.getY() * COL + dst.getX()] = _board[src.getY() * COL + src.getX()];
 	_board[src.getY() * COL + src.getX()] = None::getNone(src.getX(), src.getY());
-	_board[dst.getY() * COL + dst.getX()]->move(Place(dst.getX(), dst.getY()));
+	_board[dst.getY() * COL + dst.getX()]->move(dst);
 	
 	if (playerColor)
 	{
@@ -365,6 +367,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 		{
 			delete _board[src.getY() * COL + src.getX()];
 			_board[dst.getY() * COL + dst.getX()]->move(src);
+			_board[src.getY() * COL + src.getX()] = _board[dst.getY() * COL + dst.getX()];
 			_board[dst.getY() * COL + dst.getX()] = killedChart;
 			return SELF_CHECK;
 		}
@@ -375,6 +378,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 		{
 			delete _board[src.getY() * COL + src.getX()];
 			_board[dst.getY() * COL + dst.getX()]->move(src);
+			_board[src.getY() * COL + src.getX()] = _board[dst.getY() * COL + dst.getX()];
 			_board[dst.getY() * COL + dst.getX()] = killedChart;
 			return SELF_CHECK;
 		}
@@ -383,6 +387,19 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	//now not need to return it back becouse its 100% legal move 
 
 	delete killedChart;
+
+	if (srcType == WP && dst.getY() == 0)
+	{
+		delete _board[dst.getY() * COL + dst.getX()];
+		_board[dst.getY() * COL + dst.getX()] = Queen::getQueen(dst.getX(), dst.getY(), WQ);
+	}
+	else if (srcType == BP && dst.getY() == 7)
+	{
+		delete _board[dst.getY() * COL + dst.getX()];
+		_board[dst.getY() * COL + dst.getX()] = Queen::getQueen(dst.getX(), dst.getY(), BQ);
+
+	}
+
 
 	//check: its legal move and its make check
 	if (playerColor)

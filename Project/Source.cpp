@@ -20,7 +20,7 @@ void main()
 	Place src;
 	Place dst;
 	enum codes result = DST_CHART;
-	bool turn = false; //true for white turn, false for black turn
+	bool turn = true; //true for white turn, false for black turn
 	string toDo = "";
 	string player = turn ? "White" : "Black";
 	Board::Board();
@@ -57,7 +57,7 @@ void main()
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 
-	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
+	strcpy_s(msgToGraphics, Board::boardToStr().c_str()); // just example...
 
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 
@@ -73,8 +73,8 @@ void main()
 		do
 		{
 
-			src = Place(msgFromGraphics[0] - 'a', msgFromGraphics[1] - '1');
-			dst = Place(msgFromGraphics[2] - 'a', msgFromGraphics[3] - '1');
+			src = Place((msgFromGraphics[0] - 'a'), 7 - (msgFromGraphics[1] - '1'));
+			dst = Place((msgFromGraphics[2] - 'a'), 7 - (msgFromGraphics[3] - '1'));
 
 			result = Board::move(src, dst, turn);
 

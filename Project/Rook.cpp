@@ -44,19 +44,19 @@ bool Rook::canMove(Place dst) const
 
 	if (srcX == dstX)
 	{
-		srcY > dstY ? dstY++ : dstY--;
+		// srcY > dstY ? dstY++ : dstY--;
 
-		for (i = srcY; i < dstY; i)
+		for (i = srcY; i < dstY - 1; i)
 		{
-			if (srcY > dstY)
+			i++;
+			if (board[i * COL + srcX]->getType() != NN)
 			{
-				i--;
+				return false; //have chart 
 			}
-			else
-			{
-				i++;
-			}
-
+		}
+		for (i = srcY; i > dstY + 1; i)
+		{
+			i--;
 			if (board[i * COL + srcX]->getType() != NN)
 			{
 				return false; //have chart 
@@ -67,20 +67,20 @@ bool Rook::canMove(Place dst) const
 	}
 	else if (srcY == dstY)
 	{
-		for (i = srcX; i < dstX; i)
+		for (i = srcX; i < dstX - 1; i)
 		{
+			i++;
 			if (board[srcY * COL + i]->getType() != NN)
 			{
 				return false; //have chart 
 			}
-
-			if (srcX > dstX)
+		}
+		for (i = srcX; i > dstX + 1; i)
+		{
+			i--;
+			if (board[srcY * COL + i]->getType() != NN)
 			{
-				i--;
-			}
-			else
-			{
-				i++;
+				return false; //have chart 
 			}
 		}
 

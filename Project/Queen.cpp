@@ -47,21 +47,22 @@ bool Queen::canMove(Place dst) const
 	//rook move check
 	if (srcX == dstX)
 	{
+		// srcY > dstY ? dstY++ : dstY--;
 
-		for (i = srcY; i < dstY; i)
+		for (i = srcY; i < dstY - 1; i)
 		{
+			i++;
 			if (board[i * COL + srcX]->getType() != NN)
 			{
 				return false; //have chart 
 			}
-
-			if (srcY > dstY)
+		}
+		for (i = srcY; i > dstY + 1; i)
+		{
+			i--;
+			if (board[i * COL + srcX]->getType() != NN)
 			{
-				i--;
-			}
-			else
-			{
-				i++;
+				return false; //have chart 
 			}
 		}
 
@@ -69,20 +70,20 @@ bool Queen::canMove(Place dst) const
 	}
 	else if (srcY == dstY)
 	{
-		for (i = srcX; i < dstX; i)
+		for (i = srcX; i < dstX - 1; i)
 		{
+			i++;
 			if (board[srcY * COL + i]->getType() != NN)
 			{
 				return false; //have chart 
 			}
-
-			if (srcX > dstX)
+		}
+		for (i = srcX; i > dstX + 1; i)
+		{
+			i--;
+			if (board[srcY * COL + i]->getType() != NN)
 			{
-				i--;
-			}
-			else
-			{
-				i++;
+				return false; //have chart 
 			}
 		}
 
@@ -90,16 +91,16 @@ bool Queen::canMove(Place dst) const
 	}
 
 	//bishop move check
-	if (dis.getX() == dis.getY(), dis.getX() == -dis.getY())//he can do it, just need to check that there is no chart between them
+	if (dis.getX() == dis.getY() || dis.getX() == -dis.getY())//he can do it, just need to check that there is no chart between them
 	{
 		if (this->_location.getX() > dst.getX())
 		{
 			if (this->_location.getY() > dst.getY())
 			{
-				while (!(temp == dst))
+				while (!(temp == dst - Place(-1, -1)))
 				{
-					temp = temp - Place(1, 1);
-					if (Board::getBoard()[temp.getX() * COL + temp.getY()]->getType() != NN)
+					temp = temp - Place(-1, -1);
+					if (Board::getBoard()[temp.getY() * COL + temp.getX()]->getType() != NN)
 					{
 						return false;//there is chart between them
 					}
@@ -107,10 +108,10 @@ bool Queen::canMove(Place dst) const
 			}
 			else
 			{
-				while (!(temp == dst))
+				while (!(temp == dst - Place(-1, 1)))
 				{
-					temp = temp - Place(1, -1);
-					if (Board::getBoard()[temp.getX() * COL + temp.getY()]->getType() != NN)
+					temp = temp - Place(-1, 1);
+					if (Board::getBoard()[temp.getY() * COL + temp.getX()]->getType() != NN)
 					{
 						return false;//there is chart between them
 					}
@@ -121,10 +122,10 @@ bool Queen::canMove(Place dst) const
 		{
 			if (this->_location.getY() > dst.getY())
 			{
-				while (!(temp == dst))
+				while (!(temp == dst - Place(1, -1)))
 				{
-					temp = temp + Place(1, 1);
-					if (Board::getBoard()[temp.getX() * COL + temp.getY()]->getType() != NN)
+					temp = temp + Place(1, -1);
+					if (Board::getBoard()[temp.getY() * COL + temp.getX()]->getType() != NN)
 					{
 						return false;//there is chart between them
 					}
@@ -132,10 +133,10 @@ bool Queen::canMove(Place dst) const
 			}
 			else
 			{
-				while (!(temp == dst))
+				while (!(temp == dst - Place(1, 1)))
 				{
-					temp = temp + Place(1, -1);
-					if (Board::getBoard()[temp.getX() * COL + temp.getY()]->getType() != NN)
+					temp = temp + Place(1, 1);
+					if (Board::getBoard()[temp.getY() * COL + temp.getX()]->getType() != NN)
 					{
 						return false;//there is chart between them
 					}

@@ -50,14 +50,14 @@ bool PipeChart::canMove(Place dst) const
 		}
 	}
 
-	if ((this->_location + Place(1, 1) == dst || this->_location + Place(-1, 1) == dst) && this->getType() == WP)
+	if ((this->_location + Place(1, -1) == dst || this->_location + Place(-1, -1) == dst) && this->getType() == WP)
 	{
 		if(dstType >= 0 && dstType <= 5)
 		{
 			return true; //can eat them
 		}
 	}
-	else if ((this->_location - Place(1, 1) == dst || this->_location - Place(-1, 1) == dst) && this->getType() == BP)
+	else if ((this->_location + Place(1, 1) == dst || this->_location + Place(-1, 1) == dst) && this->getType() == BP)
 	{
 		if (dstType >= 6 && dstType <= 11)
 		{

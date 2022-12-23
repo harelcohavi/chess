@@ -3,7 +3,6 @@
 
 #include "Chart.h"
 
-
 class PipeChart : public Chart
 {
 public:
