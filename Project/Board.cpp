@@ -16,6 +16,16 @@
 #define WHITE true
 #define BLACK false
 
+#define BOARD_RIGHT_EADG 7
+#define BOARD_LOWER_EADG 7
+#define BOARD_LEFT_EADG 0
+#define BOARD_UPPER_EADG 0
+
+#define FIRST_BLACK_PIECE 0
+#define LAST_BLACK_PIECE 5
+#define FIRST_WHITE_PIECE 6
+#define LAST_WHITE_PIECE 11
+
 Chart* Board::_board[64];
 
 /*
@@ -304,11 +314,11 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	Chart* killedChart = NULL;
 
 	/**illegal index: the src or dst place is out of the board**/
-	if (src.getX() > 7 || src.getY() > 7 || dst.getX() > 7 || dst.getY() > 7)
+	if (src.getX() > BOARD_RIGHT_EADG || src.getY() > BOARD_UPPER_EADG || dst.getX() > BOARD_RIGHT_EADG || dst.getY() > BOARD_UPPER_EADG)
 	{
 		return ILLEGAL_INDEX;//too high
 	}
-	if (src.getX() < 0 || src.getY() < 0 || dst.getX() < 0 || dst.getY() < 0)
+	if (src.getX() < BOARD_LEFT_EADG || src.getY() < BOARD_LOWER_EADG || dst.getX() < BOARD_LEFT_EADG || dst.getY() < BOARD_LOWER_EADG)
 	{
 		return ILLEGAL_INDEX;//too low
 	}
@@ -326,24 +336,24 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	//no chart: the src chart isnt the player chart
 	//dst chart: the dst is the player chart
 
-	if (playerColor) // white
+	if (playerColor == WHITE) // white
 	{
-		if (!(srcType >= 6 && srcType <= 11))
+		if (!(srcType >= FIRST_WHITE_PIECE && srcType <= LAST_WHITE_PIECE))
 		{
 			return NO_CHART; //its the white turn and the src is not white
 		}
-		if (dstType >= 6 && dstType <= 11)
+		if (dstType >= FIRST_WHITE_PIECE && dstType <= LAST_WHITE_PIECE)
 		{
 			return DST_CHART; //the dst is white
 		}
 	}
 	else // black
 	{
-		if (!(srcType >= 0 && srcType <= 5))
+		if (!(srcType >= FIRST_BLACK_PIECE && srcType <= LAST_BLACK_PIECE))
 		{
 			return NO_CHART; //its the black turn and the src is not black
 		}
-		if (dstType >= 0 && dstType <= 5)
+		if (dstType >= FIRST_BLACK_PIECE && dstType <= LAST_BLACK_PIECE)
 		{
 			return DST_CHART; //the dst is black
 		}
@@ -361,7 +371,7 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 	_board[src.getY() * COL + src.getX()] = None::getNone(src.getX(), src.getY());
 	_board[dst.getY() * COL + dst.getX()]->move(dst);
 	
-	if (playerColor)
+	if (playerColor == WHITE)
 	{
 		if (whiteCheck())
 		{
@@ -388,21 +398,21 @@ enum codes Board::move(Place src, Place dst, bool playerColor)
 
 	delete killedChart;
 
-	if (srcType == WP && dst.getY() == 0)
+	if (srcType == WP && dst.getY() == BOARD_UPPER_EADG)
 	{
 		delete _board[dst.getY() * COL + dst.getX()];
-		_board[dst.getY() * COL + dst.getX()] = Queen::getQueen(dst.getX(), dst.getY(), WQ);
+		_board[dst.getY() * COL + dst.getX()] = Queen::getQueen(dst.getX(), dst.getY(), WQ);//Turn the pipe into queen
 	}
-	else if (srcType == BP && dst.getY() == 7)
+	else if (srcType == BP && dst.getY() == BOARD_LOWER_EADG)
 	{
 		delete _board[dst.getY() * COL + dst.getX()];
-		_board[dst.getY() * COL + dst.getX()] = Queen::getQueen(dst.getX(), dst.getY(), BQ);
+		_board[dst.getY() * COL + dst.getX()] = Queen::getQueen(dst.getX(), dst.getY(), BQ);//Turn the pipe into queen
 
 	}
 
 
 	//check: its legal move and its make check
-	if (playerColor)
+	if (playerColor == WHITE)
 	{
 		if (blackCheck())
 		{
